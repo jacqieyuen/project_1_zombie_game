@@ -27,6 +27,9 @@ var WIDTH = 700;
 //timer
 var timeBegin = Date.now();
 
+//frame count
+var frameCount = 0;
+
 // starting point of the zombies on the x axis
 var x_zombie_1 = 100;
 var x_zombie_2 = 200;
@@ -50,19 +53,19 @@ var spdY_fast = 20
 //ctx.fillText("Z",x,y)
 
 //empty list of zombies
-var zombieList = []
+var zombieList = {}
 
 //Create objects of zombies
 //Z1
 Zombie("Z1", 100, 0,spdY_slow,30,30,"grey")
-Zombie("Z1.1", 100, -200,spdY_slow,30,30,"grey")
-Zombie("Z1.2", 100, -400,spdY_slow,30,30,"grey")
-Zombie("Z1.3", 100, -600,spdY_slow,30,30,"grey")
+// Zombie("Z1.1", 100, -200,spdY_slow,30,30,"grey")
+// Zombie("Z1.2", 100, -400,spdY_slow,30,30,"grey")
+// Zombie("Z1.3", 100, -600,spdY_slow,30,30,"grey")
 //Z2
 Zombie("Z2", 200, 0,spdY_slow,30,30,"grey")
-Zombie("Z2.1", 200, -200,spdY_slow,30,30,"grey")
-Zombie("Z2.2", 200, -400,spdY_slow,30,30,"grey")
-Zombie("Z2.3", 200, -600,spdY_slow,30,30,"grey")
+// Zombie("Z2.1", 200, -200,spdY_slow,30,30,"grey")
+// Zombie("Z2.2", 200, -400,spdY_slow,30,30,"grey")
+// Zombie("Z2.3", 200, -600,spdY_slow,30,30,"grey")
 //Z3
 Zombie("Z3", 300, 0,spdY_fast,30,30,"black")
 //Z4
@@ -71,6 +74,17 @@ Zombie("Z4", 400, 0,spdY_slow,30,30,"grey")
 Zombie("Z5", 500, 0,spdY_medium,30,30,"red")
 //Z5
 Zombie("Z6", 600, 0,spdY_fast,30,30,"black")
+
+//Create Zombies for each row,
+//find a way to give it a proper/better ID
+generateZombies = function(){
+  Zombie(Math.random(), 100, 0,spdY_slow,30,30,"grey");
+  Zombie(Math.random(), 200, 0,spdY_slow,30,30,"grey");
+  Zombie(Math.random(), 300, 0,spdY_fast,30,30,"black");
+  Zombie(Math.random(), 400, 0,spdY_slow,30,30,"grey");
+  Zombie(Math.random(), 500, 0,spdY_medium,30,30,"red");
+  Zombie(Math.random(), 600, 0,spdY_fast,30,30,"black");
+}
 
 //Player
 var player = {
@@ -135,7 +149,7 @@ testCollision = function (yay1,yay2){
     height: yay1.height,
   }
     var rect2 = {
-      x:yay1.x-((yay2.width)/2),
+      x:yay2.x-((yay2.width)/2),
       y: yay2.y-((yay2.height)/2),
       width:yay2.width,
       height:yay2.height,
@@ -178,12 +192,18 @@ update_z_position = function (something) {
 // SET INTERVAL
 
 
-setInterval(update, 100);
+setInterval(update, 25);
 
 
 //create a while loop
 function update(){
   ctx.clearRect(0,0,WIDTH,HEIGHT);
+
+  frameCount++;
+  if (frameCount%30===0){
+    generateZombies();
+  }
+
 
   for (var key in zombieList){
     update_z(zombieList[key]);
@@ -192,15 +212,24 @@ function update(){
     if (isColliding) {
       console.log('colliding!');
       player.lives = player.lives - 1;
-      if (player.lives <= 0){
-        var timeSurvived = Date.now() - timeBegin;
-        //alert("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
-      };
     }
+  if (player.lives <= 0){
+      var timeSurvived = Date.now() - timeBegin;
+      //alert("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
+      console.log("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms")
+      startNewGame();
+    };
   };
   draw_something(player);
   ctx.fillText(("player life:" + player.lives),500,550);
+}
 
+startNewGame = function(){
+  player.lives = 10;
+  timeBegin=Date.now();
+  frameCount=0;
+  zombieList={};
+  generateZombies();
 }
 
 </script>
