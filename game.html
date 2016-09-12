@@ -1,3 +1,17 @@
+<style>
+canvas{
+  background-color: teal;
+/*  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 700px;*/
+}
+
+</style>
+
+
 <canvas id="myCanvas" width="700" height="600" style="border:1px solid #000000;"></canvas>
 
 <script>
@@ -5,13 +19,9 @@ var ctx = document.getElementById("myCanvas").getContext("2d");
 
 ctx.font = "30px Arial";
 
-
 // height and width of the window
 var HEIGHT = 600;
 var WIDTH = 700;
-
-//names
-var name = "Z";
 
 // starting point of the zombies on the x axis
 var x_zombie_1 = 100;
@@ -30,21 +40,50 @@ var y_zombie_5 = 0;
 var y_zombie_6 = 0;
 
 //different speeds
-var spdY_slow = 50
-var spdY_medium = 100
-var spdY_fast = 150
+var spdY_slow = 9
+var spdY_medium = 15
+var spdY_fast = 20
 //ctx.fillText("Z",x,y)
 
-
+//empty list of zombies
 var zombieList = []
 
 //Create objects of zombies
+//Z1
 Zombie("Z1", 100, 0,spdY_slow)
-Zombie("Z2", 200, 0,spdY_medium)
+Zombie("Z1.1", 100, -200,spdY_slow)
+Zombie("Z1.2", 100, -400,spdY_slow)
+Zombie("Z1.3", 100, -600,spdY_slow)
+//Z2
+Zombie("Z2", 200, 0,spdY_slow)
+Zombie("Z2.1", 200, -200,spdY_slow)
+Zombie("Z2.2", 200, -400,spdY_slow)
+Zombie("Z2.3", 200, -600,spdY_slow)
+//Z3
 Zombie("Z3", 300, 0,spdY_fast)
+//Z4
 Zombie("Z4", 400, 0,spdY_slow)
+//Z4
 Zombie("Z5", 500, 0,spdY_medium)
+//Z5
 Zombie("Z6", 600, 0,spdY_fast)
+
+//Player
+var player = {
+  x: 350,
+  y: 550,
+  name:"P",
+  lives:"3",
+}
+
+
+//get mouse position
+document.onmousemove = function(mouse){
+  var mouseX = mouse.clientX;
+  var mouseY = mouse.clientY;
+  player.x = mouseX;
+  player.y = mouseY;
+}
 
 //function to create objects of zombies to rest in list
 function Zombie(id,x,y,spdY){
@@ -58,27 +97,55 @@ function Zombie(id,x,y,spdY){
   zombieList[id] = zombie;
 }
 
-// SET INTERVAL
-setInterval(update, 500);
-
-// functions for zombies
-function update_z(something){
-  something.y += something.spdY;
-  ctx.fillText(something.name, something.x, something.y);
-
-  if (something.y > HEIGHT){
-    console.log("out of bounds");
-  }
+//functions for calculating collition. 1. distnce. 2. collision
+function getDistanceBetweenEntity(yay1, yay2){ // return distance in numbers
+  var vx = yay1.x - yay2.x;
+  var vy = yay1.y - yay2.y;
+  return Math.sqrt(vx*vx*vy*vy);
 }
 
+function testCollision(yay1, yay2){
+  var distance = getDistanceBetweenEntity(yay1,yay2);
+  return distance < 20;
+}
+
+
+// functions for zombies
+update_z = function(something){
+  update_z_position(something);
+  draw_something(something);
+}
+
+//function to update position
+update_z_position = function (something) {
+  something.y += something.spdY;
+  ctx.fillText(something.name, something.x, something.y);
+}
+
+//function to draw
+draw_something = function(something){
+  ctx.fillText(something.name, something.x, something.y);
+}
+
+// SET INTERVAL
+setInterval(update, 100);
+
+
+//create a while loop
 function update(){
   ctx.clearRect(0,0,WIDTH,HEIGHT);
-  update_z(zombieList["Z1"]);
-  update_z(zombieList["Z2"]);
-  update_z(zombieList["Z3"]);
-  update_z(zombieList["Z4"]);
-  update_z(zombieList["Z5"]);
-  update_z(zombieList["Z6"]);
+
+  for (var key in zombieList){
+    update_z(zombieList[key]);
+
+    var isColliding = testCollision(player,zombieList[key]);
+    if (isColliding) {
+      console.log('colliding!');
+      player.lives = player.lives - 1;
+    }
+  };
+  draw_something(player);
+  ctx.fillText(("player life:" + player.lives),500,550);
 
 }
 
