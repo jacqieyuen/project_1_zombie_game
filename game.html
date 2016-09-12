@@ -5,6 +5,15 @@ var ctx = document.getElementById("myCanvas").getContext("2d");
 
 ctx.font = "30px Arial";
 
+
+// height and width of the window
+var HEIGHT = 600;
+var WIDTH = 700;
+
+//names
+var name = "Z";
+
+// starting point of the zombies on the x axis
 var x_zombie_1 = 100;
 var x_zombie_2 = 200;
 var x_zombie_3 = 300;
@@ -12,53 +21,65 @@ var x_zombie_4 = 400;
 var x_zombie_5 = 500;
 var x_zombie_6 = 600;
 
-var y_zombie_1 = 30;
-var y_zombie_2 = 30;
-var y_zombie_3 = 30;
-var y_zombie_4 = 30;
-var y_zombie_5 = 30;
-var y_zombie_6 = 30;
+// starting point of each zombie on the y axis
+var y_zombie_1 = 0;
+var y_zombie_2 = 0;
+var y_zombie_3 = 0;
+var y_zombie_4 = 0;
+var y_zombie_5 = 0;
+var y_zombie_6 = 0;
 
+//different speeds
 var spdY_slow = 50
 var spdY_medium = 100
 var spdY_fast = 150
 //ctx.fillText("Z",x,y)
 
+
+var zombieList = []
+
+//Create objects of zombies
+Zombie("Z1", 100, 0,spdY_slow)
+Zombie("Z2", 200, 0,spdY_medium)
+Zombie("Z3", 300, 0,spdY_fast)
+Zombie("Z4", 400, 0,spdY_slow)
+Zombie("Z5", 500, 0,spdY_medium)
+Zombie("Z6", 600, 0,spdY_fast)
+
+//function to create objects of zombies to rest in list
+function Zombie(id,x,y,spdY){
+  var zombie = {
+    x:x,
+    y:y,
+    spdY:spdY,
+    name:"Z",
+    id:id,
+  }
+  zombieList[id] = zombie;
+}
+
+// SET INTERVAL
 setInterval(update, 500);
 
+// functions for zombies
+function update_z(something){
+  something.y += something.spdY;
+  ctx.fillText(something.name, something.x, something.y);
 
-function update_z1(){
-  y_zombie_1 += spdY_slow;
-  ctx.fillText("Z", x_zombie_1, y_zombie_1);
-}
-function update_z2(){
-  y_zombie_2 += spdY_medium;
-  ctx.fillText("Z", x_zombie_2, y_zombie_2);
-}
-function update_z3(){
-  y_zombie_3 += spdY_fast;
-  ctx.fillText("Z", x_zombie_3, y_zombie_3);
-}
-function update_z4(){
-  y_zombie_4 += spdY_slow;
-  ctx.fillText("Z", x_zombie_4, y_zombie_4);
-}
-function update_z5(){
-  y_zombie_5 += spdY_medium;
-  ctx.fillText("Z", x_zombie_5, y_zombie_5);
-}
-function update_z6(){
-  y_zombie_6 += spdY_fast;
-  ctx.fillText("Z", x_zombie_6, y_zombie_6);
+  if (something.y > HEIGHT){
+    console.log("out of bounds");
+  }
 }
 
 function update(){
-  update_z1()
-  update_z2()
-  update_z3()
-  update_z4()
-  update_z5()
-  update_z6()
+  ctx.clearRect(0,0,WIDTH,HEIGHT);
+  update_z(zombieList["Z1"]);
+  update_z(zombieList["Z2"]);
+  update_z(zombieList["Z3"]);
+  update_z(zombieList["Z4"]);
+  update_z(zombieList["Z5"]);
+  update_z(zombieList["Z6"]);
+
 }
 
 </script>
