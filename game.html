@@ -200,7 +200,7 @@ function update(){
   ctx.clearRect(0,0,WIDTH,HEIGHT);
 
   frameCount++;
-  if (frameCount%30===0){
+  if (frameCount%100===0){
     generateZombies();
   }
 
@@ -213,12 +213,18 @@ function update(){
       console.log('colliding!');
       player.lives = player.lives - 1;
     }
+    if (zombieList[key].y>700){
+      console.log(zombieList[key].id+"deleted");
+      delete zombieList[key];
+    }
+  };
   if (player.lives <= 0){
       var timeSurvived = Date.now() - timeBegin;
       //alert("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
       console.log("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms")
       startNewGame();
-    };
+
+
   };
   draw_something(player);
   ctx.fillText(("player life:" + player.lives),500,550);
