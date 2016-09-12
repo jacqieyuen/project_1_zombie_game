@@ -1,0 +1,64 @@
+<canvas id="myCanvas" width="700" height="600" style="border:1px solid #000000;"></canvas>
+
+<script>
+var ctx = document.getElementById("myCanvas").getContext("2d");
+
+ctx.font = "30px Arial";
+
+var x_zombie_1 = 100;
+var x_zombie_2 = 200;
+var x_zombie_3 = 300;
+var x_zombie_4 = 400;
+var x_zombie_5 = 500;
+var x_zombie_6 = 600;
+
+var y_zombie_1 = 30;
+var y_zombie_2 = 30;
+var y_zombie_3 = 30;
+var y_zombie_4 = 30;
+var y_zombie_5 = 30;
+var y_zombie_6 = 30;
+
+var spdY_slow = 50
+var spdY_medium = 100
+var spdY_fast = 150
+//ctx.fillText("Z",x,y)
+
+setInterval(update, 500);
+
+
+function update_z1(){
+  y_zombie_1 += spdY_slow;
+  ctx.fillText("Z", x_zombie_1, y_zombie_1);
+}
+function update_z2(){
+  y_zombie_2 += spdY_medium;
+  ctx.fillText("Z", x_zombie_2, y_zombie_2);
+}
+function update_z3(){
+  y_zombie_3 += spdY_fast;
+  ctx.fillText("Z", x_zombie_3, y_zombie_3);
+}
+function update_z4(){
+  y_zombie_4 += spdY_slow;
+  ctx.fillText("Z", x_zombie_4, y_zombie_4);
+}
+function update_z5(){
+  y_zombie_5 += spdY_medium;
+  ctx.fillText("Z", x_zombie_5, y_zombie_5);
+}
+function update_z6(){
+  y_zombie_6 += spdY_fast;
+  ctx.fillText("Z", x_zombie_6, y_zombie_6);
+}
+
+function update(){
+  update_z1()
+  update_z2()
+  update_z3()
+  update_z4()
+  update_z5()
+  update_z6()
+}
+
+</script>
