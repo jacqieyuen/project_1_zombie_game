@@ -1,18 +1,19 @@
 <style>
 canvas{
-  background-color: #003366;
+  background-color: #020731;
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
   margin-right: auto;
   display: block;
-  width: 700px;
+  border:1px solid #000000;
+  /*width: 700px;*/
 }
 
 </style>
 
 
-<canvas id="myCanvas" width="700" height="600" style="border:1px solid #000000;"></canvas>
+<canvas id="myCanvas" width="700" height="600"></canvas>
 <script src ="jquery.min.js"></script>
 <script>
 var ctx = document.getElementById("myCanvas").getContext("2d");
@@ -55,12 +56,12 @@ var zombieList = []
 //Z1
 Zombie("Z1", 100, 0,spdY_slow,30,30,"grey")
 Zombie("Z1.1", 100, -200,spdY_slow,30,30,"grey")
-Zombie("Z1.2", 100, -400,spdY_slow,15,15,"grey")
-Zombie("Z1.3", 100, -600,spdY_slow,20,20,"grey")
+Zombie("Z1.2", 100, -400,spdY_slow,30,30,"grey")
+Zombie("Z1.3", 100, -600,spdY_slow,30,30,"grey")
 //Z2
 Zombie("Z2", 200, 0,spdY_slow,30,30,"grey")
 Zombie("Z2.1", 200, -200,spdY_slow,30,30,"grey")
-Zombie("Z2.2", 200, -400,spdY_slow,40,30,"grey")
+Zombie("Z2.2", 200, -400,spdY_slow,30,30,"grey")
 Zombie("Z2.3", 200, -600,spdY_slow,30,30,"grey")
 //Z3
 Zombie("Z3", 300, 0,spdY_fast,30,30,"black")
@@ -69,7 +70,7 @@ Zombie("Z4", 400, 0,spdY_slow,30,30,"grey")
 //Z4
 Zombie("Z5", 500, 0,spdY_medium,30,30,"red")
 //Z5
-Zombie("Z6", 600, 0,spdY_fast,20,30,"black")
+Zombie("Z6", 600, 0,spdY_fast,30,30,"black")
 
 //Player
 var player = {
@@ -149,10 +150,10 @@ testCollision = function (yay1,yay2){
 
 
 collisionRect= function(rect1,rect2){
-  return rect1.x <= rect2.x + rect2.width
-    && rect2.x <= rect1.x + rect1.width
-    && rect1.y <= rect2.y + rect2.height
-    && rect2.y <= rect1.height + rect1.y;
+  return (rect1.x < rect2.x + rect2.width &&
+   rect1.x + rect1.width > rect2.x &&
+   rect1.y < rect2.y + rect2.height &&
+   rect1.height + rect1.y > rect2.y);
 }
 
 //function to draw
@@ -194,7 +195,6 @@ function update(){
       if (player.lives <= 0){
         var timeSurvived = Date.now() - timeBegin;
         //alert("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
-        player.lives=10;
       };
     }
   };
