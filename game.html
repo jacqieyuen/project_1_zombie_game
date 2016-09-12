@@ -1,19 +1,19 @@
 <style>
 canvas{
-  background-color: navy;
-/*  padding-left: 0;
+  background-color: #003366;
+  padding-left: 0;
   padding-right: 0;
   margin-left: auto;
   margin-right: auto;
   display: block;
-  width: 700px;*/
+  width: 700px;
 }
 
 </style>
 
 
 <canvas id="myCanvas" width="700" height="600" style="border:1px solid #000000;"></canvas>
-
+<script src ="jquery.min.js"></script>
 <script>
 var ctx = document.getElementById("myCanvas").getContext("2d");
 
@@ -85,8 +85,21 @@ var player = {
 
 //get mouse position
 document.onmousemove = function(mouse){
-  var mouseX = mouse.clientX;
-  var mouseY = mouse.clientY;
+  var mouseX = mouse.clientX-document.getElementById("myCanvas").getBoundingClientRect().left;
+  var mouseY = mouse.clientY- document.getElementById("myCanvas").getBoundingClientRect().top;
+  if (mouseX < (player.width/2)){
+    mouseX = (player.width/2)
+  };
+  if (mouseX > WIDTH-(player.width/2)){
+    mouseX = WIDTH-(player.width/2)
+  };
+  if (mouseY < (player.height/2)){
+    mouseY = (player.height/2)
+  };
+  if (mouseY > HEIGHT-(player.height/2)){
+    mouseY = HEIGHT-(player.height/2)
+  };
+
   player.x = mouseX;
   player.y = mouseY;
 }
@@ -162,6 +175,8 @@ update_z_position = function (something) {
 }
 
 // SET INTERVAL
+
+
 setInterval(update, 100);
 
 
