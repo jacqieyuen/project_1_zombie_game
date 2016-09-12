@@ -162,7 +162,7 @@ update_z_position = function (something) {
 }
 
 // SET INTERVAL
-setInterval(update, 100);
+setInterval(update, 500);
 
 
 //create a while loop
@@ -178,9 +178,9 @@ function update(){
       player.lives = player.lives - 1;
       if (player.lives <= 0){
         var timeSurvived = Date.now() - timeBegin;
-        //alert("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
-        player.lives=10;
-      };
+        console.log("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
+        timeBegin = Date.now()
+      }
     }
   };
   draw_something(player);
