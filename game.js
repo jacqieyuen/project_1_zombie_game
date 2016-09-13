@@ -1,3 +1,7 @@
+  //create scoreboard
+var scoreBoard  = [];
+var highscores = scoreBoard.sort(function(a, b){return b-a});
+
 //get mouse position, including discrepancy between the screen and canvas
 document.onmousemove = function(mouse){
   var mouseX = mouse.clientX-document.getElementById("myCanvas").getBoundingClientRect().left;
@@ -17,6 +21,8 @@ document.onmousemove = function(mouse){
 
   player.x = mouseX;
   player.y = mouseY;
+  cursorX = mouseX;
+  cursorY = mouseY;
   }
 testCollision = function (yay1,yay2){
   var rect1 = {
@@ -58,6 +64,8 @@ update_z_position = function (something) {
   }
 gameEnd = function(){
   player.color = "red";
+  scoreBoard.push(score);
+  console.log(scoreBoard);
   console.log("YOU HAVE DIED! You have a score of "+ score +"!")
   clearInterval(Interval);
   }

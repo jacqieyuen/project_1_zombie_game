@@ -11,6 +11,7 @@
   var spdY_fast   = 20
   //empty list of zombies
   var zombieList  = {}
+
 // END of VARIABLES END of VARIABLES END of VARIABLES END of VARIABLES
 
 //*** Create ZOMBIE objects usine Zombie(id,x,y,spdY,width,height,color)
