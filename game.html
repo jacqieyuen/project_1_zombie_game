@@ -9,36 +9,33 @@ canvas{
   border:1px solid #000000;
   /*width: 700px;*/
 }
-
 </style>
-
-
 <canvas id="myCanvas" width="700" height="600"></canvas>
-
 <script src ="jquery.min.js"></script>
-
 <script>
-var ctx = document.getElementById("myCanvas").getContext("2d");
-ctx.font = "30px Arial";
-var HEIGHT = 600;
-var WIDTH = 700;
-var frameCount = 0;
-var score = 0;
-//different speeds
-var spdY_slow = 9
-var spdY_medium = 15
-var spdY_fast = 20
-//empty list of zombies
-var zombieList = {}
-//Create objects of zombies  Zombie(id,x,y,spdY,width,height,color)
-Zombie("Z1", 100, -50,spdY_slow,30,30,"grey")
-Zombie("Z2", 200, -50,spdY_slow,20,20,"grey")
-Zombie("Z3", 300, -50,spdY_slow,40,40,"grey")
-Zombie("Z4", 400, -50,spdY_slow,30,30,"grey")
-Zombie("Z5", 500, -50,spdY_slow,30,30,"grey")
-Zombie("Z6", 600, -50,spdY_slow,30,30,"grey")
-//Create Zombies for each row,
-//find a way to give it a proper/better ID
+//VARIABLES VARIABLES VARIABLES VARIABLES VARIABLES VARIABLES VARIABLES
+  var ctx         = document.getElementById("myCanvas").getContext("2d");
+  ctx.font        = "30px Arial";
+  var HEIGHT      = 600;
+  var WIDTH       = 700;
+  var frameCount  = 0;
+  var score       = 0;
+  //different speeds
+  var spdY_slow   = 9
+  var spdY_medium = 15
+  var spdY_fast   = 20
+  //empty list of zombies
+  var zombieList  = {}
+// END of VARIABLES END of VARIABLES END of VARIABLES END of VARIABLES
+
+//*** Create ZOMBIE objects usine Zombie(id,x,y,spdY,width,height,color)
+  Zombie("Z1", 100, -50,spdY_slow,30,30,"grey")
+  Zombie("Z2", 200, -50,spdY_slow,20,20,"grey")
+  Zombie("Z3", 300, -50,spdY_slow,40,40,"grey")
+  Zombie("Z4", 400, -50,spdY_slow,30,30,"grey")
+  Zombie("Z5", 500, -50,spdY_slow,30,30,"grey")
+  Zombie("Z6", 600, -50,spdY_slow,30,30,"grey")
+//Create Zombies for each row -find a way to give it a proper/better ID
 generateZombies = function(){
   Zombie(Math.random(), 100, -50,spdY_slow,30,30,"grey");
   Zombie(Math.random(), 200, -50,spdY_slow,20,20,"grey");
@@ -131,7 +128,12 @@ update_z = function(something){
 update_z_position = function (something) {
   something.y += something.spdY;
 }
-function gameInit(){ // initiate game
+gameEnd = function(){
+  player.color = "red";
+  console.log("YOU HAVE DIED! You have a score of "+ score +"!")
+  clearInterval(Interval);
+}
+gameInit = function(){ // initiate game
   Interval = setInterval(update, 30); // SET INTERVAL
   function update(){
     ctx.clearRect(0,0,WIDTH,HEIGHT);
@@ -164,20 +166,5 @@ function gameInit(){ // initiate game
   }
 }
 gameInit();
-
-gameEnd = function(){
-  player.color = "red";
-  console.log("YOU HAVE DIED! You have a score of "+ score +"!")
-  clearInterval(Interval);
-}
-
-
-startNewGame = function(){
-  player.lives = 10;
-  frameCount=0;
-  score = 0;
-  zombieList={};
-  generateZombies();
-}
 
 </script>
