@@ -1,6 +1,6 @@
 <style>
 canvas{
-  background-color: #020731;
+  background-color: pink;
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
@@ -14,7 +14,9 @@ canvas{
 
 
 <canvas id="myCanvas" width="700" height="600"></canvas>
+
 <script src ="jquery.min.js"></script>
+
 <script>
 var ctx = document.getElementById("myCanvas").getContext("2d");
 
@@ -30,21 +32,24 @@ var timeBegin = Date.now();
 //frame count
 var frameCount = 0;
 
+//score count
+var score = 0;
+
 // starting point of the zombies on the x axis
-var x_zombie_1 = 100;
-var x_zombie_2 = 200;
-var x_zombie_3 = 300;
-var x_zombie_4 = 400;
-var x_zombie_5 = 500;
-var x_zombie_6 = 600;
+// var x_zombie_1 = 100;
+// var x_zombie_2 = 200;
+// var x_zombie_3 = 300;
+// var x_zombie_4 = 400;
+// var x_zombie_5 = 500;
+// var x_zombie_6 = 600;
 
 // starting point of each zombie on the y axis
-var y_zombie_1 = 0;
-var y_zombie_2 = 0;
-var y_zombie_3 = 0;
-var y_zombie_4 = 0;
-var y_zombie_5 = 0;
-var y_zombie_6 = 0;
+// var y_zombie_1 = 0;
+// var y_zombie_2 = 0;
+// var y_zombie_3 = 0;
+// var y_zombie_4 = 0;
+// var y_zombie_5 = 0;
+// var y_zombie_6 = 0;
 
 //different speeds
 var spdY_slow = 9
@@ -57,33 +62,27 @@ var zombieList = {}
 
 //Create objects of zombies
 //Z1
-Zombie("Z1", 100, 0,spdY_slow,30,30,"grey")
-// Zombie("Z1.1", 100, -200,spdY_slow,30,30,"grey")
-// Zombie("Z1.2", 100, -400,spdY_slow,30,30,"grey")
-// Zombie("Z1.3", 100, -600,spdY_slow,30,30,"grey")
+Zombie("Z1", 100, -50,spdY_slow,30,30,"grey")
 //Z2
-Zombie("Z2", 200, 0,spdY_slow,30,30,"grey")
-// Zombie("Z2.1", 200, -200,spdY_slow,30,30,"grey")
-// Zombie("Z2.2", 200, -400,spdY_slow,30,30,"grey")
-// Zombie("Z2.3", 200, -600,spdY_slow,30,30,"grey")
+Zombie("Z2", 200, -50,spdY_slow,20,20,"grey")
 //Z3
-Zombie("Z3", 300, 0,spdY_fast,30,30,"black")
+Zombie("Z3", 300, -50,spdY_slow,40,40,"grey")
 //Z4
-Zombie("Z4", 400, 0,spdY_slow,30,30,"grey")
+Zombie("Z4", 400, -50,spdY_slow,30,30,"grey")
 //Z4
-Zombie("Z5", 500, 0,spdY_medium,30,30,"red")
+Zombie("Z5", 500, -50,spdY_slow,30,30,"grey")
 //Z5
-Zombie("Z6", 600, 0,spdY_fast,30,30,"black")
+Zombie("Z6", 600, -50,spdY_slow,30,30,"grey")
 
 //Create Zombies for each row,
 //find a way to give it a proper/better ID
 generateZombies = function(){
-  Zombie(Math.random(), 100, 0,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 200, 0,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 300, 0,spdY_fast,30,30,"black");
-  Zombie(Math.random(), 400, 0,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 500, 0,spdY_medium,30,30,"red");
-  Zombie(Math.random(), 600, 0,spdY_fast,30,30,"black");
+  Zombie(Math.random(), 100, -50,spdY_slow,30,30,"grey");
+  Zombie(Math.random(), 200, -50,spdY_slow,20,20,"grey");
+  Zombie(Math.random(), 300, -50,spdY_slow,40,40,"grey");
+  Zombie(Math.random(), 400, -50,spdY_slow,30,30,"grey");
+  Zombie(Math.random(), 500, -50,spdY_slow,30,30,"grey");
+  Zombie(Math.random(), 600, -50,spdY_slow,30,30,"grey");
 }
 
 //Player
@@ -91,7 +90,7 @@ var player = {
   x: 350,
   y: 550,
   name:"P",
-  lives:"3",
+  lives:"10",
   width:20,
   height:20,
   color: "white"
@@ -191,49 +190,59 @@ update_z_position = function (something) {
 
 // SET INTERVAL
 
+function gameInit(){
+  var refreshIntervalId = setInterval(update, 30);
 
-setInterval(update, 25);
 
+  //create a while loop
+  function update(){
+    ctx.clearRect(0,0,WIDTH,HEIGHT);
 
-//create a while loop
-function update(){
-  ctx.clearRect(0,0,WIDTH,HEIGHT);
+    frameCount++;
+    if (frameCount%40===0){
+      generateZombies();
+    };
+    if (frameCount%20===0){
+      score ++;
+    };
 
-  frameCount++;
-  if (frameCount%100===0){
-    generateZombies();
+    for (var key in zombieList){
+      update_z(zombieList[key]);
+
+      var isColliding = testCollision(player,zombieList[key]);
+      if (isColliding) {
+        console.log('INFECTED!');
+        delete zombieList[key];
+        player.lives = player.lives - 1;
+      }
+      if (zombieList[key].y>700){
+        delete zombieList[key];
+      }
+    };
+    if (player.lives <= 0){
+        var timeSurvived = Date.now() - timeBegin;
+        //alert("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
+        console.log("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms")
+        // startNewGame();
+        player.color = "red";
+        player.lives = 0;
+        clearInterval(refreshIntervalId);
+
+    };
+
+    draw_something(player);
+    ctx.fillText(("Player Life: " + player.lives),500,550);
+    ctx.fillText(("Score: " + score),500,500);
+
   }
-
-
-  for (var key in zombieList){
-    update_z(zombieList[key]);
-
-    var isColliding = testCollision(player,zombieList[key]);
-    if (isColliding) {
-      console.log('colliding!');
-      player.lives = player.lives - 1;
-    }
-    if (zombieList[key].y>700){
-      console.log(zombieList[key].id+"deleted");
-      delete zombieList[key];
-    }
-  };
-  if (player.lives <= 0){
-      var timeSurvived = Date.now() - timeBegin;
-      //alert("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
-      console.log("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms")
-      startNewGame();
-
-
-  };
-  draw_something(player);
-  ctx.fillText(("player life:" + player.lives),500,550);
 }
+gameInit();
 
 startNewGame = function(){
   player.lives = 10;
   timeBegin=Date.now();
   frameCount=0;
+  score = 0;
   zombieList={};
   generateZombies();
 }
