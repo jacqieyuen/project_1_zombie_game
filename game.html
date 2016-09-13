@@ -19,61 +19,24 @@ canvas{
 
 <script>
 var ctx = document.getElementById("myCanvas").getContext("2d");
-
 ctx.font = "30px Arial";
-
-// height and width of the window
 var HEIGHT = 600;
 var WIDTH = 700;
-
-//timer
-var timeBegin = Date.now();
-
-//frame count
 var frameCount = 0;
-
-//score count
 var score = 0;
-
-// starting point of the zombies on the x axis
-// var x_zombie_1 = 100;
-// var x_zombie_2 = 200;
-// var x_zombie_3 = 300;
-// var x_zombie_4 = 400;
-// var x_zombie_5 = 500;
-// var x_zombie_6 = 600;
-
-// starting point of each zombie on the y axis
-// var y_zombie_1 = 0;
-// var y_zombie_2 = 0;
-// var y_zombie_3 = 0;
-// var y_zombie_4 = 0;
-// var y_zombie_5 = 0;
-// var y_zombie_6 = 0;
-
 //different speeds
 var spdY_slow = 9
 var spdY_medium = 15
 var spdY_fast = 20
-//ctx.fillText("Z",x,y)
-
 //empty list of zombies
 var zombieList = {}
-
-//Create objects of zombies
-//Z1
+//Create objects of zombies  Zombie(id,x,y,spdY,width,height,color)
 Zombie("Z1", 100, -50,spdY_slow,30,30,"grey")
-//Z2
 Zombie("Z2", 200, -50,spdY_slow,20,20,"grey")
-//Z3
 Zombie("Z3", 300, -50,spdY_slow,40,40,"grey")
-//Z4
 Zombie("Z4", 400, -50,spdY_slow,30,30,"grey")
-//Z4
 Zombie("Z5", 500, -50,spdY_slow,30,30,"grey")
-//Z5
 Zombie("Z6", 600, -50,spdY_slow,30,30,"grey")
-
 //Create Zombies for each row,
 //find a way to give it a proper/better ID
 generateZombies = function(){
@@ -84,8 +47,7 @@ generateZombies = function(){
   Zombie(Math.random(), 500, -50,spdY_slow,30,30,"grey");
   Zombie(Math.random(), 600, -50,spdY_slow,30,30,"grey");
 }
-
-//Player
+//Player Object
 var player = {
   x: 350,
   y: 550,
@@ -95,9 +57,7 @@ var player = {
   height:20,
   color: "white"
 }
-
-
-//get mouse position
+//get mouse position, including discrepancy between the screen and canvas
 document.onmousemove = function(mouse){
   var mouseX = mouse.clientX-document.getElementById("myCanvas").getBoundingClientRect().left;
   var mouseY = mouse.clientY- document.getElementById("myCanvas").getBoundingClientRect().top;
@@ -117,8 +77,7 @@ document.onmousemove = function(mouse){
   player.x = mouseX;
   player.y = mouseY;
 }
-
-//function to create objects of zombies to rest in list
+//function to create objects of zombies and push into list
 function Zombie(id,x,y,spdY,width,height,color){
   var zombie = {
     x:x,
@@ -132,115 +91,89 @@ function Zombie(id,x,y,spdY,width,height,color){
   }
   zombieList[id] = zombie;
 }
-
-//functions for calculating collition. 1. distnce. 2. collision
-// function getDistanceBetweenEntity(yay1, yay2){ // return distance in numbers
-//   var vx = yay1.x - yay2.x;
-//   var vy = yay1.y - yay2.y;
-//   return Math.sqrt(vx*vx*vy*vy);
-// }
-
+//TRUE OR FALSE? calculating the collision between two rectangles, inputs are player, zombieList[key] *** keep in mind the rectangle width/height! its point is at the center of the square.
 testCollision = function (yay1,yay2){
     var rect1 = {
     x: yay1.x-((yay1.width)/2),
     y: yay1.y-((yay1.height)/2),
     width: yay1.width,
     height: yay1.height,
-  }
+    };
     var rect2 = {
-      x:yay2.x-((yay2.width)/2),
-      y: yay2.y-((yay2.height)/2),
-      width:yay2.width,
-      height:yay2.height,
-    }
-  return collisionRect(rect1,rect2);
+    x:yay2.x-((yay2.width)/2),
+    y: yay2.y-((yay2.height)/2),
+    width:yay2.width,
+    height:yay2.height,
+    };
+    return collisionRect(rect1,rect2);
 }
-
-// function testCollision(yay1, yay2){
-//   var distance = getDistanceBetweenEntity(yay1,yay2);
-//   return distance < 20;
-// }
-
-
+//collision function for rectangles
 collisionRect= function(rect1,rect2){
-  return (rect1.x < rect2.x + rect2.width &&
+   return (rect1.x < rect2.x + rect2.width &&
    rect1.x + rect1.width > rect2.x &&
    rect1.y < rect2.y + rect2.height &&
    rect1.height + rect1.y > rect2.y);
 }
 
-//function to draw
+//function to draw rectangles
 draw_something = function(something){
-  ctx.save();
+  ctx.save(); // make sure to save so that we can revert the color back to normal
   ctx.fillStyle = something.color;
-  ctx.fillRect(something.x-((something.width)/2), something.y-((something.width)/2),something.width,something.height);
-  ctx.restore();
+  ctx.fillRect(something.x-((something.width)/2), something.y-((something.width)/2),something.width,something.height); // dimensions of rectangle
+  ctx.restore(); // restore ctx to original settings
 }
-
 // functions for zombies
 update_z = function(something){
   update_z_position(something);
   draw_something(something);
 }
-
 //function to update position
 update_z_position = function (something) {
   something.y += something.spdY;
 }
-
-// SET INTERVAL
-
-function gameInit(){
-  var refreshIntervalId = setInterval(update, 30);
-
-
-  //create a while loop
+function gameInit(){ // initiate game
+  Interval = setInterval(update, 30); // SET INTERVAL
   function update(){
     ctx.clearRect(0,0,WIDTH,HEIGHT);
-
     frameCount++;
-    if (frameCount%40===0){
+    if (frameCount%30===0){
       generateZombies();
     };
-    if (frameCount%20===0){
+    if (frameCount%15===0){
       score ++;
     };
-
     for (var key in zombieList){
       update_z(zombieList[key]);
-
       var isColliding = testCollision(player,zombieList[key]);
       if (isColliding) {
         console.log('INFECTED!');
         delete zombieList[key];
         player.lives = player.lives - 1;
-      }
+      };
       if (zombieList[key].y>700){
         delete zombieList[key];
-      }
+      };
     };
+
     if (player.lives <= 0){
-        var timeSurvived = Date.now() - timeBegin;
-        //alert("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms");
-        console.log("YOU HAVE BEEN INFECTED! You survived for "+timeSurvived +"ms")
-        // startNewGame();
-        player.color = "red";
-        player.lives = 0;
-        clearInterval(refreshIntervalId);
-
+        gameEnd();
     };
-
     draw_something(player);
     ctx.fillText(("Player Life: " + player.lives),500,550);
     ctx.fillText(("Score: " + score),500,500);
-
   }
 }
 gameInit();
 
+gameEnd = function(){
+  player.color = "red";
+  console.log("YOU HAVE DIED! You have a score of "+ score +"!")
+  clearInterval(Interval);
+}
+
+
 startNewGame = function(){
   player.lives = 10;
-  timeBegin=Date.now();
   frameCount=0;
   score = 0;
   zombieList={};
