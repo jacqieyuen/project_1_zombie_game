@@ -2,6 +2,7 @@
 var scoreBoard  = [0,0,0,0];
 var highscores = scoreBoard.sort(function(a, b){return b-a});
 var running = false;
+var restart = true;
 
 
 //get mouse position, including discrepancy between the screen and canvas
@@ -65,13 +66,14 @@ update_z_position = function (something) {
   something.y += something.spdY;
   }
 gameEnd = function(){
-  running = false;
-  player.color = "red";
+  // running = false;
+  restart=false;
   scoreBoard.push(score);
   highscores = scoreBoard.sort(function(a, b){return b-a});
   console.log(highscores);
   console.log("YOU HAVE DIED! You have a score of "+ score +"!")
   clearInterval(Interval);
+  scoreboardBox();
   }
 gameInit = function(){ // initiate game
   running = true;

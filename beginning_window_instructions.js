@@ -8,7 +8,7 @@ var button = {
   color: "yellow"
 };
 
-drawInstructionsBox = function(){
+drawBox = function(){
     ctx.save(); // make sure to save so that we can revert the color back to normal
     ctx.fillStyle = "green";
     ctx.fillRect(200,150,300,300);; // dimensions of rectangle
@@ -29,13 +29,11 @@ drawIntructions = function(){
 var button = {
   x: 300,
   y: 375,
-  name:"P",
-  lives:"10",
   width:100,
   height:40,
   color: "yellow"
 }
-playButton = function(){
+drawPlayButton = function(){
   ctx.save(); // make sure to save so that we can revert the color back to normal
   ctx.fillStyle = button.color;
   ctx.fillRect(button.x,button.y,button.width,button.height);
@@ -45,19 +43,14 @@ playButton = function(){
   ctx.fillText("PLAY",326,403);
   ctx.restore();
   }
-instructionsBox = function(){
-  drawInstructionsBox();
-  drawIntructions();
-  playButton();
-  }
 
 clickPlay = function(){
   $('canvas').on('click', function(e){
     console.log("Player clicked on a cell");
     console.log(cursorX+" "+cursorY);
     if ( checkIfInsideButton(cursorX,cursorY)){
-      console.log("gamebegins");
       if(!running){
+        console.log("gamebegins");
         gameInit();
       }
     }
@@ -70,12 +63,19 @@ checkIfInsideButton = function(something1,something2){
   }
 }
 
-startGame = function(){
+// startGame = function(){
+//   clickPlay();
+// };
+
+instructionsBox = function(){
+  drawBox();
+  drawIntructions();
+  drawPlayButton();
   clickPlay();
-};
+  };
 
 instructionsBox();
-startGame();
+// startGame();
 
 
 
