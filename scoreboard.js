@@ -23,8 +23,8 @@ drawDoneButton = function(){
   }
 
 
-clickDone= function(){
-  $('canvas').on('click', function(e){
+clickDone = function(){
+  $('canvas').off().on('click', function(e){
     console.log("Player clicked on a cell");
     console.log(cursorX+" "+cursorY);
     if ( checkIfInsideButton(cursorX,cursorY)){
@@ -45,7 +45,7 @@ scoreboardBox = function(){
   drawScores();
   drawDoneButton();
   clickDone();
-  }
+}
 
 
 

@@ -45,7 +45,7 @@ drawPlayButton = function(){
   }
 
 clickPlay = function(){
-  $('canvas').on('click', function(e){
+  $('canvas').off().on('click', function(e){
     console.log("Player clicked on a cell");
     console.log(cursorX+" "+cursorY);
     if ( checkIfInsideButton(cursorX,cursorY)){
