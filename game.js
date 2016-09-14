@@ -60,20 +60,28 @@ draw_something = function(something){
 update_z = function(something){
   update_z_position(something);
   draw_something(something);
-  }
+  };
 //function to update position
 update_z_position = function (something) {
   something.y += something.spdY;
-  }
+  };
+
+resetVariables = function (){
+  player.lives=5;
+  score=0;
+  frameCount=0;
+  zombieList={};
+  pillsList={};
+}
 gameEnd = function(){
   // running = false;
   restart=false;
-  player.lives=10;
   scoreBoard.push(score);
   highscores = scoreBoard.sort(function(a, b){return b-a});
   console.log(highscores);
   console.log("YOU HAVE DIED! You have a score of "+ score +"!")
   clearInterval(Interval);
+  resetVariables();
   scoreboardBox();
   }
 gameInit = function(){ // initiate game
@@ -82,12 +90,26 @@ gameInit = function(){ // initiate game
   function update(){
     ctx.clearRect(0,0,WIDTH,HEIGHT);
     frameCount++;
-    if (frameCount%30===0){
-      generateZombies();
-    };
     if (frameCount%15===0){
       score ++;
     };
+    if (frameCount%30===0){
+      generateZombies();
+    };
+    if (frameCount%150===0){
+      randomlyGeneratePills();
+    };
+    for (var key in pillsList){
+      update_z(pillsList[key]);
+      var isColliding = testCollision(player,pillsList[key]);
+      if (isColliding) {
+        console.log('pill eaten!!');
+        delete pillsList[key];
+        score= score+ 10;
+        break;
+      };
+    }
+
     for (var key in zombieList){
       update_z(zombieList[key]);
       var isColliding = testCollision(player,zombieList[key]);

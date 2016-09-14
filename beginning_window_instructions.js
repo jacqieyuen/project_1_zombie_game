@@ -22,7 +22,7 @@ drawIntructions = function(){
     ctx.fillText("Do not collide with Zombies",220,250);
     ctx.fillText("or you will slowly become one!",215,270);
     ctx.fillText("Capture pills to increase your",215,320);
-    ctx.fillText("immune against Zombies!",225,340);
+    ctx.fillText("scoreeeeeeeeeeee!",225,340);
     ctx.restore();
   }
 

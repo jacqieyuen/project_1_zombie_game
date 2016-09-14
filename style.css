@@ -9,7 +9,7 @@
 */
 
 #myCanvas{
-  background-color: pink;
+  background-image: url(zombie_background.jpg);
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
