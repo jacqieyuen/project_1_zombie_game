@@ -1,0 +1,59 @@
+diff --git a/game.js b/game.js
+index 5e155be..33ca01e 100644
+--- a/game.js
++++ b/game.js
+@@ -65,14 +65,20 @@ update_z = function(something){
+ update_z_position = function (something) {
+   something.y += something.spdY;
+   }
++resetGlobals = function(){
++  frameCount=0;
++  score=0;
++  zombieList={};
++}
+ gameEnd = function(){
+-  // running = false;
+   restart=false;
++  player.lives=10;
+   scoreBoard.push(score);
+   highscores = scoreBoard.sort(function(a, b){return b-a});
+   console.log(highscores);
+   console.log("YOU HAVE DIED! You have a score of "+ score +"!")
+   clearInterval(Interval);
++  resetGlobals();
+   scoreboardBox();
+   }
+ gameInit = function(){ // initiate game
+@@ -100,13 +106,12 @@ gameInit = function(){ // initiate game
+         delete zombieList[key];
+       };
+     };
+-
+-    if (player.lives <= 0){
+-        gameEnd();
+-    };
+     draw_something(player);
+     ctx.fillText(("Player Life: " + player.lives),500,550);
+     ctx.fillText(("Score: " + score),500,500);
++    if (player.lives <= 0){
++        gameEnd();
++    };
+   };
+   }
+ //initialize game. Use Play Button to Initiate.
+diff --git a/scoreboard.js b/scoreboard.js
+index 8125ed1..a09012c 100644
+--- a/scoreboard.js
++++ b/scoreboard.js
+@@ -28,10 +28,9 @@ clickDone= function(){
+     console.log("Player clicked on a cell");
+     console.log(cursorX+" "+cursorY);
+     if ( checkIfInsideButton(cursorX,cursorY)){
+-      console.log("return to instructions page");
+         if(!restart){
++            running=false;
+             console.log("return to instructions page");
+-            running = false;
+             instructionsBox();
+       }
+ 

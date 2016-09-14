@@ -68,6 +68,7 @@ update_z_position = function (something) {
 gameEnd = function(){
   // running = false;
   restart=false;
+  player.lives=10;
   scoreBoard.push(score);
   highscores = scoreBoard.sort(function(a, b){return b-a});
   console.log(highscores);
@@ -100,13 +101,12 @@ gameInit = function(){ // initiate game
         delete zombieList[key];
       };
     };
-
-    if (player.lives <= 0){
-        gameEnd();
-    };
     draw_something(player);
     ctx.fillText(("Player Life: " + player.lives),500,550);
     ctx.fillText(("Score: " + score),500,500);
+    if (player.lives <= 0){
+        gameEnd();
+    };
   };
   }
 //initialize game. Use Play Button to Initiate.

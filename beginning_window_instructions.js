@@ -68,6 +68,7 @@ checkIfInsideButton = function(something1,something2){
 // };
 
 instructionsBox = function(){
+  restart=true;
   drawBox();
   drawIntructions();
   drawPlayButton();
