@@ -27,9 +27,12 @@ canvas{
   //empty list of zombies
   var zombieList  = {};
   //create scoreboard
-  var scoreBoard  = [];
+  var scoreBoard  = [0,0,0,0,0,0];
+  var highscores = scoreBoard.sort(function(a, b){return b-a});
   // game behin, flag setter
   var gameBeginsFlag = false;
+  //game restarts
+  var gameRestartFlag = false;
 // END of VARIABLES END of VARIABLES END of VARIABLES END of VARIABLES
 
 //*** Create ZOMBIE objects usine Zombie(id,x,y,spdY,width,height,color)
@@ -53,7 +56,7 @@ var player = {
   x: 350,
   y: 550,
   name:"P",
-  lives:"10",
+  lives:"2",
   width:20,
   height:20,
   color: "white"
@@ -80,7 +83,7 @@ document.onmousemove = function(mouse){
   };
 
   player.x = mouseX;
-  cursorX = mouseX
+  cursorX = mouseX;
   player.y = mouseY;
   cursorY = mouseY;
 }
@@ -139,10 +142,13 @@ update_z_position = function (something) {
   something.y += something.spdY;
 }
 gameEnd = function(){
-  player.color = "red";
-  console.log("YOU HAVE DIED! You have a score of "+ score +"!")
   clearInterval(Interval);
-}
+  scoreBoard.push(score);
+  highscores=highscores.sort(function(a, b){return b-a});
+  console.log(highscores);
+  console.log("YOU HAVE DIED! You have a score of "+ score +"!")
+  // ctx.clearRect(document.getElementById("myCanvas").getBoundingClientRect().left, document.getElementById("myCanvas").getBoundingClientRect().top,700,600);
+  }
 gameInit = function(){ // initiate game
   Interval = setInterval(update, 30); // SET INTERVAL
   function update(){
@@ -158,10 +164,10 @@ gameInit = function(){ // initiate game
       update_z(zombieList[key]);
       var isColliding = testCollision(player,zombieList[key]);
       if (isColliding) {
-        console.log('INFECTED!');
+        console.log('BITTEN!');
         delete zombieList[key];
         player.lives = player.lives - 1;
-        scoreBoard.push(score);
+        break;
       };
       if (zombieList[key].y>700){
         delete zombieList[key];
@@ -169,89 +175,159 @@ gameInit = function(){ // initiate game
     };
 
     if (player.lives <= 0){
-        gameEnd();
+      gameEnd();
     };
     draw_something(player);
     ctx.fillText(("Player Life: " + player.lives),500,550);
     ctx.fillText(("Score: " + score),500,500);
   }
 }
-//gameInit();
+gameInit();
 
-// instructionsBox = function ()
+// // instructionsBox = function ()
 
-drawInstructionsBox = function(){
-    ctx.save(); // make sure to save so that we can revert the color back to normal
-    ctx.fillStyle = "green";
-    ctx.fillRect(200,150,300,300);; // dimensions of rectangle
-    ctx.restore(); // restore ctx to original settings
-  }
-drawIntructions = function(){
-    ctx.save();
-    ctx.font = "30px Arial";
-    ctx.fillText("INSTRUCTIONS",239,200);
-    ctx.font="20px Arial";
-    ctx.fillText("Do not collide with Zombies",220,250);
-    ctx.fillText("or you will slowly become one!",215,270);
-    ctx.fillText("Capture pills to increase your",215,320);
-    ctx.fillText("immune against Zombies!",225,340);
-    ctx.restore();
-  }
+// drawInstructionsBox = function(){
+//     ctx.save(); // make sure to save so that we can revert the color back to normal
+//     ctx.fillStyle = "green";
+//     ctx.fillRect(200,150,300,300);; // dimensions of rectangle
+//     ctx.restore(); // restore ctx to original settings
+//   }
+// drawIntructions = function(){
+//     ctx.save();
+//     ctx.font = "30px Arial";
+//     ctx.fillText("INSTRUCTIONS",239,200);
+//     ctx.font="20px Arial";
+//     ctx.fillText("Do not collide with Zombies",220,250);
+//     ctx.fillText("or you will slowly become one!",215,270);
+//     ctx.fillText("Capture pills to increase your",215,320);
+//     ctx.fillText("immune against Zombies!",225,340);
+//     ctx.restore();
+//   }
 
-var button = {
-  x: 300,
-  y: 375,
-  name:"P",
-  lives:"10",
-  width:100,
-  height:40,
-  color: "yellow"
-}
-playButton = function(){
-  ctx.save(); // make sure to save so that we can revert the color back to normal
-  ctx.fillStyle = button.color;
-  ctx.fillRect(button.x,button.y,button.width,button.height);
-  ctx.restore();
-  ctx.save();
-  ctx.font = "20px Arial";
-  ctx.fillText("PLAY",326,403);
-  ctx.restore();
-  }
-instructionsBox = function(){
-  drawInstructionsBox();
-  drawIntructions();
-  playButton();
-  }
+// var playButton = {
+//   x: 300,
+//   y: 375,
+//   width:100,
+//   height:40,
+//   color: "yellow",
+// }
+// PlayButton = function(){
+//   ctx.save(); // make sure to save so that we can revert the color back to normal
+//   ctx.fillStyle = playButton.color;
+//   ctx.fillRect(playButton.x,playButton.y,playButton.width,playButton.height);
+//   ctx.restore();
+//   ctx.save();
+//   ctx.font = "20px Arial";
+//   ctx.fillText("PLAY",326,403);
+//   ctx.restore();
+//   }
+// instructionsBox = function(){
+//   drawInstructionsBox();
+//   drawIntructions();
+//   PlayButton();
+//   }
 
-clickPlay = function(){
-  $('canvas').on('click', function(e){
-    console.log("Player clicked on a cell");
-    checkIfInsideButton(cursorX,cursorY);
-    console.log(gameBeginsFlag);
-    console.log(cursorX+" "+cursorY);
-    if (gameBeginsFlag === true){
-      console.log("gamebegins");
-      gameInit();
-    }
-  });
-};
+// clickPlay = function(){
+//   $('canvas').on('click', function(e){
+//     console.log("Player clicked on a cell");
+//     checkIfInsidePlayButton(cursorX,cursorY);
+//     console.log(gameBeginsFlag);
+//     console.log(cursorX+" "+cursorY);
+//     if (gameBeginsFlag === true){
+//       console.log("game begins");
+//       ctx.clearRect(document.getElementById("myCanvas").getBoundingClientRect().left, document.getElementById("myCanvas").getBoundingClientRect().top,700,600);
+//     }
+//   });
+// };
 
-function checkIfInsideButton(something1,something2){
-  if(((something1>300)&&(something1<400))&&((something2>375)&&(something2<415))){
-    gameBeginsFlag = true;
-    return true;
-  } else {
-    gameBeginsFlag = false;
-    return false;
-  }
-}
+// function checkIfInsidePlayButton(something1,something2){
+//   if(((something1>300)&&(something1<400))&&((something2>375)&&(something2<415))){
+//     gameBeginsFlag = true;
+//     return true;
+//   } else {
+//     gameBeginsFlag = false;
+//     return false;
+//   }
+// }
 
-startGame = function(){
-  clickPlay();
-};
+// startGame = function(){
+//   clickPlay();
+//   };
 
-instructionsBox();
-startGame();
+// drawScoreBoardBox = function(){
+//     ctx.save(); // make sure to save so that we can revert the color back to normal
+//     ctx.fillStyle = "green";
+//     ctx.fillRect(200,150,300,300);; // dimensions of rectangle
+//     ctx.restore(); // restore ctx to original settings
+//   }
+// drawScoreBoard = function(){
+//     ctx.save();
+//     ctx.font = "30px Arial";
+//     ctx.fillText("Your are infected!",230,200);
+//     ctx.fillText("HIGH-SCORES",239,250);
+//     ctx.font="20px Arial";
+//     ctx.fillText((highscores[0]),239,300);
+//     ctx.fillText(highscores[1],239,320);
+//     ctx.fillText(highscores[2],239,340);
+//     // ctx.fillText(highscore[3],225,340);
+//     ctx.restore();
+//   }
+
+// // var getText = document.getElementById("inputText").value;
+// // ctx.fillText("i" + getText,10,50);
+
+// var doneButton = {
+//   x: 300,
+//   y: 375,
+//   width:100,
+//   height:40,
+//   color: "yellow",
+// }
+
+// DoneButton = function(){
+//   ctx.save(); // make sure to save so that we can revert the color back to normal
+//   ctx.fillStyle = doneButton.color;
+//   ctx.fillRect(doneButton.x,doneButton.y,doneButton.width,doneButton.height);
+//   ctx.restore();
+//   ctx.save();
+//   ctx.font = "20px Arial";
+//   ctx.fillText("DONE",323,403);
+//   ctx.restore();
+//   }
+
+// ScoreBoardBox = function(){
+//   drawScoreBoardBox();
+//   drawScoreBoard();
+//   DoneButton();
+//   clickDone();
+// }
+// clickDone = function(){
+//   $('canvas').on('click', function(e){
+//     console.log("Player clicked on a cell");
+//     checkIfInsideDoneButton(cursorX,cursorY);
+//     console.log(gameRestartFlag);
+//     console.log(cursorX+" "+cursorY);
+//     if (gameRestartFlag === true){
+//       console.log("game restarts");
+
+//     }
+//   });
+// };
+// function checkIfInsideDoneButton(something1,something2){
+//   if(((something1>300)&&(something1<400))&&((something2>375)&&(something2<415))){
+//     gameRestartFlag = true;
+//     return true;
+//   } else {
+//     gameBeginsFlag = false;
+//     return false;
+//   }
+// }
+
+
+
+// instructionsBox();
+// startGame();
+// gameInit();
 
 </script>
 

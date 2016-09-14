@@ -15,20 +15,21 @@
 // END of VARIABLES END of VARIABLES END of VARIABLES END of VARIABLES
 
 //*** Create ZOMBIE objects usine Zombie(id,x,y,spdY,width,height,color)
-  Zombie("Z1", 100, -50,spdY_slow,30,30,"grey")
-  Zombie("Z2", 200, -50,spdY_slow,20,20,"grey")
-  Zombie("Z3", 300, -50,spdY_slow,40,40,"grey")
-  Zombie("Z4", 400, -50,spdY_slow,30,30,"grey")
-  Zombie("Z5", 500, -50,spdY_slow,30,30,"grey")
-  Zombie("Z6", 600, -50,spdY_slow,30,30,"grey")
+  Zombie("Z1", 100, -50,spdY_slow,55,55,"grey")
+  Zombie("Z2", 200, -50,spdY_slow,50,50,"grey")
+  Zombie("Z3", 300, -50,spdY_slow,50,50,"grey")
+  Zombie("Z4", 400, -50,spdY_slow,50,50,"grey")
+  Zombie("Z5", 500, -50,spdY_slow,50,50,"grey")
+  Zombie("Z6", 600, -50,spdY_slow,50,50,"grey")
 //Create Zombies for each row -find a way to give it a proper/better ID
 generateZombies = function(){
-  Zombie(Math.random(), 100, -50,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 200, -50,spdY_slow,20,20,"grey");
-  Zombie(Math.random(), 300, -50,spdY_slow,40,40,"grey");
-  Zombie(Math.random(), 400, -50,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 500, -50,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 600, -50,spdY_slow,30,30,"grey");
+  Zombie(Math.random(), 25, -50,spdY_slow,50,50,"grey");
+  Zombie(Math.random(), 100, -50,spdY_slow,50,50,"grey");
+  Zombie(Math.random(), 200, -50,spdY_slow,50,50,"grey");
+  Zombie(Math.random(), 300, -50,spdY_slow,50,50,"grey");
+  Zombie(Math.random(), 400, -50,spdY_slow,50,50,"grey");
+  Zombie(Math.random(), 500, -50,spdY_slow,50,50,"grey");
+  Zombie(Math.random(), 600, -50,spdY_slow,50,50,"grey");
 }
 function Zombie(id,x,y,spdY,width,height,color){
   var zombie = {

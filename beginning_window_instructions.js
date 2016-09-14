@@ -7,14 +7,12 @@ var button = {
   height:40,
   color: "yellow"
 };
-// game behin, flag setter
-var gameBeginsFlag = false;
 
 drawInstructionsBox = function(){
     ctx.save(); // make sure to save so that we can revert the color back to normal
     ctx.fillStyle = "green";
     ctx.fillRect(200,150,300,300);; // dimensions of rectangle
-    ctx.restore(); // restore ctx to original settings
+    ctx.restore();
   }
 drawIntructions = function(){
     ctx.save();
@@ -56,23 +54,19 @@ instructionsBox = function(){
 clickPlay = function(){
   $('canvas').on('click', function(e){
     console.log("Player clicked on a cell");
-    checkIfInsideButton(cursorX,cursorY);
-    console.log(gameBeginsFlag);
     console.log(cursorX+" "+cursorY);
-    if (gameBeginsFlag === true){
+    if ( checkIfInsideButton(cursorX,cursorY)){
       console.log("gamebegins");
-      gameInit();
+      if(!running){
+        gameInit();
+      }
     }
   });
 };
 
-function checkIfInsideButton(something1,something2){
+checkIfInsideButton = function(something1,something2){
   if(((something1>300)&&(something1<400))&&((something2>375)&&(something2<415))){
-    gameBeginsFlag = true;
     return true;
-  } else {
-    gameBeginsFlag = false;
-    return false;
   }
 }
 

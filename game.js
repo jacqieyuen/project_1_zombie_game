@@ -1,6 +1,8 @@
   //create scoreboard
-var scoreBoard  = [];
+var scoreBoard  = [0,0,0,0];
 var highscores = scoreBoard.sort(function(a, b){return b-a});
+var running = false;
+
 
 //get mouse position, including discrepancy between the screen and canvas
 document.onmousemove = function(mouse){
@@ -63,13 +65,16 @@ update_z_position = function (something) {
   something.y += something.spdY;
   }
 gameEnd = function(){
+  running = false;
   player.color = "red";
   scoreBoard.push(score);
-  console.log(scoreBoard);
+  highscores = scoreBoard.sort(function(a, b){return b-a});
+  console.log(highscores);
   console.log("YOU HAVE DIED! You have a score of "+ score +"!")
   clearInterval(Interval);
   }
 gameInit = function(){ // initiate game
+  running = true;
   Interval = setInterval(update, 30); // SET INTERVAL
   function update(){
     ctx.clearRect(0,0,WIDTH,HEIGHT);
@@ -87,6 +92,7 @@ gameInit = function(){ // initiate game
         console.log('INFECTED!');
         delete zombieList[key];
         player.lives = player.lives - 1;
+        break;
       };
       if (zombieList[key].y>700){
         delete zombieList[key];
@@ -101,7 +107,6 @@ gameInit = function(){ // initiate game
     ctx.fillText(("Score: " + score),500,500);
   };
   }
-
 //initialize game. Use Play Button to Initiate.
 // gameInit();
 

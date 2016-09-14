@@ -1,3 +1,13 @@
+/*.main {
+  width: 700;
+  height: 600
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+*/
+
 #myCanvas{
   background-color: pink;
   padding-left: 0;
@@ -8,3 +18,4 @@
   border:1px solid #000000;
   /*width: 700px;*/
 }
+
