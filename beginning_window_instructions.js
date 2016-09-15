@@ -10,13 +10,14 @@ var button = {
 
 drawBox = function(){
     ctx.save(); // make sure to save so that we can revert the color back to normal
-    ctx.fillStyle = "green";
+    ctx.fillStyle = "grey";
     ctx.fillRect(200,150,300,300);; // dimensions of rectangle
     ctx.restore();
   }
 drawIntructions = function(){
     ctx.save();
     ctx.font = "30px Arial";
+    ctx.fillStyle = "white";
     ctx.fillText("INSTRUCTIONS",239,200);
     ctx.font="20px Arial";
     ctx.fillText("Do not collide with Zombies",220,250);
@@ -74,7 +75,6 @@ instructionsBox = function(){
   drawPlayButton();
   clickPlay();
   };
-
 instructionsBox();
 // startGame();
 

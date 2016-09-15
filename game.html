@@ -30,33 +30,41 @@ canvas{
   var scoreBoard  = [0,0,0,0,0,0];
   var highscores = scoreBoard.sort(function(a, b){return b-a});
   // game behin, flag setter
-
+  var spriteSheet = new Image();
+  spriteSheet.src = "mushroom.png";
+  var playerPic = new Image();
+  playerPic.src = "girl.png";
 
 //*** Create ZOMBIE objects usine Zombie(id,x,y,spdY,width,height,color)
-  Zombie("Z1", 100, -50,spdY_slow,30,30,"grey")
-  Zombie("Z2", 200, -50,spdY_slow,20,20,"grey")
-  Zombie("Z3", 300, -50,spdY_slow,40,40,"grey")
-  Zombie("Z4", 400, -50,spdY_slow,30,30,"grey")
-  Zombie("Z5", 500, -50,spdY_slow,30,30,"grey")
-  Zombie("Z6", 600, -50,spdY_slow,30,30,"grey")
+  Zombie("Z1", 100, -50,spdY_slow,50,50,"grey",0,0)
+  // Zombie("Z2", 200, -50,spdY_slow,20,20,"grey")
+  // Zombie("Z3", 300, -50,spdY_slow,40,40,"grey")
+  // Zombie("Z4", 400, -50,spdY_slow,30,30,"grey")
+  // Zombie("Z5", 500, -50,spdY_slow,30,30,"grey")
+  // Zombie("Z6", 600, -50,spdY_slow,30,30,"grey")
 //Create Zombies for each row -find a way to give it a proper/better ID
 generateZombies = function(){
-  Zombie(Math.random(), 100, -50,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 200, -50,spdY_slow,20,20,"grey");
-  Zombie(Math.random(), 300, -50,spdY_slow,40,40,"grey");
-  Zombie(Math.random(), 400, -50,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 500, -50,spdY_slow,30,30,"grey");
-  Zombie(Math.random(), 600, -50,spdY_slow,30,30,"grey");
+  Zombie(Math.random(), 100, -50,spdY_slow,50,50,"grey",0,0);
+  // Zombie(Math.random(), 200, -50,spdY_slow,20,20,"grey");
+  // Zombie(Math.random(), 300, -50,spdY_slow,40,40,"grey");
+  // Zombie(Math.random(), 400, -50,spdY_slow,30,30,"grey");
+  // Zombie(Math.random(), 500, -50,spdY_slow,30,30,"grey");
+  // Zombie(Math.random(), 600, -50,spdY_slow,30,30,"grey");
 }
 //Player Object
 var player = {
   x: 350,
   y: 550,
   name:"P",
-  lives:"2",
+  lives:"9",
   width:20,
   height:20,
-  color: "white"
+  color: "white",
+  img: playerPic,
+  sx:0,
+  sy:0,
+  sw:16,
+  sh:17,
 };
 var cursor = {
   x:0,
@@ -85,7 +93,8 @@ document.onmousemove = function(mouse){
   cursorY = mouseY;
 }
 //function to create objects of zombies and push into list
-function Zombie(id,x,y,spdY,width,height,color){
+
+function Zombie(id,x,y,spdY,width,height,color,sx,sy){
   var zombie = {
     x:x,
     y:y,
@@ -95,6 +104,11 @@ function Zombie(id,x,y,spdY,width,height,color){
     width:width,
     height:height,
     color:color,
+    img: spriteSheet,
+    sx:sx,
+    sy:sy,
+    sw:70,
+    sh:75,
   }
   zombieList[id] = zombie;
 }
@@ -125,8 +139,9 @@ collisionRect= function(rect1,rect2){
 //function to draw rectangles
 draw_something = function(something){
   ctx.save(); // make sure to save so that we can revert the color back to normal
-  ctx.fillStyle = something.color;
-  ctx.fillRect(something.x-((something.width)/2), something.y-((something.height)/2),something.width,something.height); // dimensions of rectangle
+  // ctx.fillStyle = something.color;
+  // ctx.fillRect(something.x-((something.width)/2), something.y-((something.height)/2),something.width,something.height); // dimensions of rectangle
+  ctx.drawImage(something.img,something.sx,something.sy,something.sw,something.sh,something.x-((something.width)/2), something.y-((something.width)/2),something.width,something.height);
   ctx.restore(); // restore ctx to original settings
 }
 // functions for zombies

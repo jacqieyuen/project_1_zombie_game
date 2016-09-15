@@ -9,7 +9,10 @@
 */
 
 #myCanvas{
-  background-image: url(zombie_background.jpg);
+  background-image: url(egg-rice-silver-spoon-01-12.png);
+  background-size: cover;
+  background-position: center center;
+  /*background-color: pink;*/
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;

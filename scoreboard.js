@@ -4,10 +4,10 @@ drawScores = function(){
     ctx.font = "30px Arial";
     ctx.fillText("HIGH-SCORES",239,200);
     ctx.font="20px Arial";
-    ctx.fillText(highscores[0],220,250);
-    ctx.fillText(highscores[1],215,270);
-    ctx.fillText(highscores[2],215,320);
-    ctx.fillText(highscores[3],225,340);
+    ctx.fillText(highscores[0],235,250);
+    ctx.fillText(highscores[1],235,270);
+    ctx.fillText(highscores[2],235,320);
+    ctx.fillText(highscores[3],235,340);
     ctx.restore();
   }
 

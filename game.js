@@ -52,8 +52,9 @@ collisionRect= function(rect1,rect2){
 //function to draw rectangles
 draw_something = function(something){
   ctx.save(); // make sure to save so that we can revert the color back to normal
-  ctx.fillStyle = something.color;
-  ctx.fillRect(something.x-((something.width)/2), something.y-((something.width)/2),something.width,something.height); // dimensions of rectangle
+  ctx.drawImage(something.img,something.sx,something.sy,something.sw,something.sh,something.x-((something.width)/2), something.y-((something.width)/2),something.width,something.height);
+  // ctx.fillStyle = something.color;
+  // ctx.fillRect(something.x-((something.width)/2), something.y-((something.width)/2),something.width,something.height); // dimensions of rectangle
   ctx.restore(); // restore ctx to original settings
   }
 // functions for zombies
@@ -86,7 +87,7 @@ gameEnd = function(){
   }
 gameInit = function(){ // initiate game
   running = true;
-  Interval = setInterval(update, 30); // SET INTERVAL
+  Interval = setInterval(update, 50); // SET INTERVAL
   function update(){
     ctx.clearRect(0,0,WIDTH,HEIGHT);
     frameCount++;
@@ -124,8 +125,11 @@ gameInit = function(){ // initiate game
       };
     };
     draw_something(player);
-    ctx.fillText(("Player Life: " + player.lives),500,550);
-    ctx.fillText(("Score: " + score),500,500);
+    ctx.save();
+    ctx.fillStyle = "white"
+    ctx.fillText(("Player Life: " + player.lives),505,580);
+    ctx.fillText(("Score: " + score),505,550);
+    ctx.restore();
     if (player.lives <= 0){
         gameEnd();
     };

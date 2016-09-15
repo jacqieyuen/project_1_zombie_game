@@ -11,6 +11,8 @@
   var spdY_fast   = 20
   //empty list of zombies
   var zombieList  = {}
+  var spriteSheet = new Image();
+  spriteSheet.src = "mushroom.png"
 
 // END of VARIABLES END of VARIABLES END of VARIABLES END of VARIABLES
 
@@ -34,6 +36,19 @@ generateZombies = function(){
   Zombie(Math.random(), (Math.random()*40)+600, -((Math.random()*150)+40),spdY_slow,50,50,"grey");
   Zombie(Math.random(), (Math.random()*40)+675, -((Math.random()*150)+40),spdY_slow,50,50,"grey");
 }
+// function Zombie(id,x,y,spdY,width,height,color){
+//   var zombie = {
+//     x:x,
+//     y:y,
+//     spdY:spdY,
+//     name:"Z",
+//     id:id,
+//     width:width,
+//     height:height,
+//     color:color,
+//   }
+//   zombieList[id] = zombie;
+// }
 function Zombie(id,x,y,spdY,width,height,color){
   var zombie = {
     x:x,
@@ -44,6 +59,11 @@ function Zombie(id,x,y,spdY,width,height,color){
     width:width,
     height:height,
     color:color,
+    img: spriteSheet,
+    sx:0,
+    sy:0,
+    sw:70,
+    sh:75,
   }
   zombieList[id] = zombie;
 }
