@@ -131,6 +131,24 @@ gameInit = function(){ // initiate game
         delete bombsList[key];
         };
       }
+    if (frameCount%350===0){
+      randomlyGeneratehearts();
+      console.log("heart falling")
+    };
+    for (var key in heartsList){
+      update_z(heartsList[key]);
+      var isColliding = testCollision(player,heartsList[key]);
+      if (isColliding) {
+        console.log('life increaseed!!');
+        delete heartsList[key];
+        score= score+50;
+        player.lives=player.lives+1;
+        break;
+      };
+      if (heartsList[key].y>700){
+        delete heartsList[key];
+        };
+      }
     for (var key in zombieList){
       update_z(zombieList[key]);
       var isColliding = testCollision(player,zombieList[key]);
