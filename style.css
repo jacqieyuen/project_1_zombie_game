@@ -10,6 +10,14 @@
 div{
   height:40px;
 }
+audio{
+  display: block;
+  margin-top: 80px;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
 #myCanvas{
   background-image: url(egg-rice-silver-spoon-01-12.png);
   background-size: cover;

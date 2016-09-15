@@ -90,6 +90,7 @@ gameInit = function(){ // initiate game
   running = true;
   Interval = setInterval(update, 50); // SET INTERVAL
   function update(){
+    playbkgdMusic();
     ctx.clearRect(0,0,WIDTH,HEIGHT);
     frameCount++;
     if (frameCount%15===0){
@@ -107,6 +108,7 @@ gameInit = function(){ // initiate game
       if (isColliding) {
         console.log('pill eaten!!');
         delete pillsList[key];
+        playscoreUp();
         score= score+ 10;
         break;
       };
@@ -123,6 +125,7 @@ gameInit = function(){ // initiate game
       if (isColliding) {
         console.log('bomb exploded!!');
         delete bombsList[key];
+        playExplosion();
         score= score+50;
         zombieList={};
         break;
@@ -141,6 +144,7 @@ gameInit = function(){ // initiate game
       if (isColliding) {
         console.log('life increaseed!!');
         delete heartsList[key];
+        playlifeUp();
         score= score+50;
         player.lives=player.lives+1;
         break;
