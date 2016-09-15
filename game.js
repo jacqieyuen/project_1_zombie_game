@@ -73,6 +73,7 @@ resetVariables = function (){
   frameCount=0;
   zombieList={};
   pillsList={};
+  bombsList={};
 }
 gameEnd = function(){
   // running = false;
@@ -109,8 +110,27 @@ gameInit = function(){ // initiate game
         score= score+ 10;
         break;
       };
-    }
-
+      if (pillsList[key].y>700){
+        delete pillsList[key];
+      };
+      }
+    if (frameCount%250===0){
+      randomlyGenerateBombs();
+    };
+    for (var key in bombsList){
+      update_z(bombsList[key]);
+      var isColliding = testCollision(player,bombsList[key]);
+      if (isColliding) {
+        console.log('bomb exploded!!');
+        delete bombsList[key];
+        score= score+50;
+        zombieList={};
+        break;
+      };
+      if (bombsList[key].y>700){
+        delete bombsList[key];
+        };
+      }
     for (var key in zombieList){
       update_z(zombieList[key]);
       var isColliding = testCollision(player,zombieList[key]);

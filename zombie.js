@@ -33,8 +33,8 @@ generateZombies = function(){
   Zombie(Math.random(), (Math.random()*40)+300, -((Math.random()*150)+40),spdY_slow,50,50,"grey");
   Zombie(Math.random(), (Math.random()*40)+400, -((Math.random()*150)+60),spdY_slow,50,50,"grey");
   Zombie(Math.random(), (Math.random()*40)+500, -((Math.random()*150)+50),spdY_slow,50,50,"grey");
-  Zombie(Math.random(), (Math.random()*40)+600, -((Math.random()*150)+40),spdY_slow,50,50,"grey");
-  Zombie(Math.random(), (Math.random()*40)+675, -((Math.random()*150)+40),spdY_slow,50,50,"grey");
+  Zombie(Math.random(), (Math.random()*40)+590, -((Math.random()*150)+40),spdY_slow,50,50,"grey");
+  Zombie(Math.random(), (Math.random()*40)+650, -((Math.random()*150)+40),spdY_slow,50,50,"grey");
 }
 // function Zombie(id,x,y,spdY,width,height,color){
 //   var zombie = {

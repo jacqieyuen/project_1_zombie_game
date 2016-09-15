@@ -7,7 +7,9 @@
   top: 0; left: 0; bottom: 0; right: 0;
 }
 */
-
+div{
+  height:40px;
+}
 #myCanvas{
   background-image: url(egg-rice-silver-spoon-01-12.png);
   background-size: cover;
