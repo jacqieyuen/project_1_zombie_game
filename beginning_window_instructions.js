@@ -20,10 +20,10 @@ drawIntructions = function(){
     ctx.fillStyle = "white";
     ctx.fillText("INSTRUCTIONS",239,200);
     ctx.font="20px Arial";
-    ctx.fillText("Do not collide with Zombies",220,250);
-    ctx.fillText("or you will slowly become one!",215,270);
-    ctx.fillText("Capture pills to increase your",215,320);
-    ctx.fillText("scoreeeeeeeeeeee!",225,340);
+    ctx.fillText("Do not touch Mushrooms",213,250);
+    ctx.fillText("Eat cake & increase your score",213,280);
+    ctx.fillText("Touch bombs to kill Mushrooms",213,310);
+    ctx.fillText("Capture a heart to add a life",213,340);
     ctx.restore();
   }
 

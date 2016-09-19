@@ -2,13 +2,14 @@
 drawScores = function(){
     ctx.save();
     ctx.font = "30px Arial";
-    ctx.fillText("HIGH-SCORES",239,200);
-    ctx.font="20px Arial";
-    ctx.fillText(highscores[0],235,250);
-    ctx.fillText(highscores[1],235,270);
-    ctx.fillText(highscores[2],235,320);
-    ctx.fillText(highscores[3],235,340);
+    ctx.fillText("HIGH-SCORES",245,200);
+    ctx.font="30px Arial";
+    ctx.fillText("1.  "+highscores[0],320,250);
+    ctx.fillText("2.  "+highscores[1],320,280);
+    ctx.fillText("3.  "+highscores[2],320,310);
+    ctx.fillText(("Your Score:  "+score),240,350);
     ctx.restore();
+    resetVariables();
   }
 
 drawDoneButton = function(){

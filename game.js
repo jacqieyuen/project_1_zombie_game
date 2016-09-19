@@ -78,19 +78,21 @@ resetVariables = function (){
 gameEnd = function(){
   // running = false;
   restart=false;
+  // pausebkgdMusic();
   scoreBoard.push(score);
   highscores = scoreBoard.sort(function(a, b){return b-a});
   console.log(highscores);
   console.log("YOU HAVE DIED! You have a score of "+ score +"!")
   clearInterval(Interval);
-  resetVariables();
+  ctx.clearRect(0,0,WIDTH,HEIGHT);
   scoreboardBox();
   }
 gameInit = function(){ // initiate game
   running = true;
+  ctx.clearRect(0,0,WIDTH,HEIGHT);
   Interval = setInterval(update, 50); // SET INTERVAL
   function update(){
-    playbkgdMusic();
+    // playbkgdMusic();
     ctx.clearRect(0,0,WIDTH,HEIGHT);
     frameCount++;
     if (frameCount%15===0){
@@ -109,7 +111,7 @@ gameInit = function(){ // initiate game
         console.log('pill eaten!!');
         delete pillsList[key];
         playscoreUp();
-        score= score+ 10;
+        score= score+ 50;
         break;
       };
       if (pillsList[key].y>700){
@@ -126,7 +128,7 @@ gameInit = function(){ // initiate game
         console.log('bomb exploded!!');
         delete bombsList[key];
         playExplosion();
-        score= score+50;
+        score= score+100;
         zombieList={};
         break;
       };
@@ -145,7 +147,7 @@ gameInit = function(){ // initiate game
         console.log('life increaseed!!');
         delete heartsList[key];
         playlifeUp();
-        score= score+50;
+        score= score+30;
         player.lives=player.lives+1;
         break;
       };
@@ -159,6 +161,8 @@ gameInit = function(){ // initiate game
       if (isColliding) {
         console.log('INFECTED!');
         delete zombieList[key];
+        if (player.lives > 1){
+          playhitZ();};
         player.lives = player.lives - 1;
         break;
       };
@@ -168,11 +172,12 @@ gameInit = function(){ // initiate game
     };
     draw_something(player);
     ctx.save();
-    ctx.fillStyle = "white"
+    ctx.fillStyle = "black"
     ctx.fillText(("Player Life: " + player.lives),505,580);
     ctx.fillText(("Score: " + score),505,550);
     ctx.restore();
     if (player.lives <= 0){
+        playdead();
         gameEnd();
     };
   };

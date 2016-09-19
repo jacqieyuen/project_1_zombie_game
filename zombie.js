@@ -62,8 +62,8 @@ function Zombie(id,x,y,spdY,width,height,color){
     img: spriteSheet,
     sx:6,
     sy:6,
-    sw:70,
-    sh:70,
+    sw:63.75,
+    sh:68.5,
   }
   zombieList[id] = zombie;
 }
