@@ -21,5 +21,5 @@ function Hearts(id,x,y,spdY,width,height,color){
   heartsList[id] = heart;
 }
 randomlyGeneratehearts = function(){
-  Hearts(Math.random(),Math.random()*200+100,-((Math.random()*300)+500),spdY_fast,25,25);
+  Hearts(Math.random(),Math.random()*100+500,-((Math.random()*300)+300),spdY_fast,25,25);
 }

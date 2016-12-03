@@ -16,12 +16,3 @@ var player = {
   sw:16,
   sh:17,
 };
-// var player = {
-//   x: 350,
-//   y: 550,
-//   lives:5,
-//   width:20,
-//   height:20,
-//   color: "white"
-
-// }

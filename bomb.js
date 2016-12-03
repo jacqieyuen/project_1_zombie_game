@@ -21,5 +21,5 @@ function Bombs(id,x,y,spdY,width,height,color){
   bombsList[id] = bomb;
 }
 randomlyGenerateBombs = function(){
-  Bombs(Math.random(),Math.random()*100+100,-((Math.random()*150)+600),spdY_medium,20,25);
+  Bombs(Math.random(),Math.random()*500+500,-((Math.random()*150)+600),spdY_medium,20,25);
 }
