@@ -1,9 +1,9 @@
-  var heartPic = new Image();
-  heartPic.src = "heart.png";
+var heartPic = new Image();
+heartPic.src = "images/heart.png";
 
 var heartsList={};
 
-function Hearts(id,x,y,spdY,width,height,color){
+var Hearts = function (id,x,y,spdY,width,height,color) {
   var heart = {
     x:x,
     y:y,
@@ -17,9 +17,10 @@ function Hearts(id,x,y,spdY,width,height,color){
     sy:0,
     sw:49,
     sh:48,
-  }
+  };
   heartsList[id] = heart;
-}
-randomlyGeneratehearts = function(){
+};
+
+var randomlyGeneratehearts = function () {
   Hearts(Math.random(),Math.random()*100+500,-((Math.random()*300)+300),spdY_fast,25,25);
-}
+};

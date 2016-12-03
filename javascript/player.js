@@ -1,6 +1,6 @@
 
   var playerPic = new Image();
-  playerPic.src = "girl.png";
+  playerPic.src = "images/girl.png";
 
 var player = {
   x: 350,

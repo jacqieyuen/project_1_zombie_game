@@ -1,9 +1,9 @@
-  var bombPic = new Image();
-  bombPic.src = "bomb.png";
+var bombPic = new Image();
+bombPic.src = "images/bomb.png";
 
 var bombsList={};
 
-function Bombs(id,x,y,spdY,width,height,color){
+var Bombs = function (id,x,y,spdY,width,height,color) {
   var bomb = {
     x:x,
     y:y,
@@ -17,9 +17,10 @@ function Bombs(id,x,y,spdY,width,height,color){
     sy:0,
     sw:15,
     sh:24,
-  }
+  };
   bombsList[id] = bomb;
-}
-randomlyGenerateBombs = function(){
+};
+
+var randomlyGenerateBombs = function(){
   Bombs(Math.random(),Math.random()*500+500,-((Math.random()*150)+600),spdY_medium,20,25);
-}
+};
