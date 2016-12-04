@@ -11,8 +11,7 @@ var scoreUp = new Audio();
 scoreUp.src ="audio/scoring.mp3";
 
 var hitZ = new Audio();
-hitZ.src = "audio/cooking_mama_background_music.mp3";
-// "audio/hit.mp3";
+hitZ.src ="audio/hit.mp3";
 
 var dead = new Audio();
 dead.src ="audio/dead.mp3";
