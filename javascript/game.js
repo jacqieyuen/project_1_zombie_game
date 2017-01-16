@@ -53,8 +53,6 @@ var collisionRect= function(rect1,rect2){
 var draw_something = function(something){
   ctx.save(); // make sure to save so that we can revert the color back to normal
   ctx.drawImage(something.img,something.sx,something.sy,something.sw,something.sh,something.x-((something.width)/2), something.y-((something.width)/2),something.width,something.height);
-  // ctx.fillStyle = something.color;
-  // ctx.fillRect(something.x-((something.width)/2), something.y-((something.width)/2),something.width,something.height); // dimensions of rectangle
   ctx.restore(); // restore ctx to original settings
   };
 // functions for zombies
@@ -72,7 +70,7 @@ var resetVariables = function (){
   score=0;
   frameCount=0;
   zombieList={};
-  pillsList={};
+  cakesList={};
   bombsList={};
 };
 var gameEnd = function(){
@@ -102,20 +100,20 @@ var gameInit = function(){ // initiate game
       generateZombies();
     }
     if (frameCount%150===0){
-      randomlyGeneratePills();
+      randomlyGenerateCakes();
     }
-    for (var key in pillsList){
-      update_z(pillsList[key]);
-      var isColliding = testCollision(player,pillsList[key]);
+    for (var key in cakesList){
+      update_z(cakesList[key]);
+      var isColliding = testCollision(player,cakesList[key]);
       if (isColliding) {
-        // console.log('pill eaten!!');
-        delete pillsList[key];
+        console.log('cake eaten!!');
+        delete cakesList[key];
         playscoreUp();
         score= score+ 50;
         break;
       }
-      if (pillsList[key].y>700){
-        delete pillsList[key];
+      if (cakesList[key].y>700){
+        delete cakesList[key];
       }
     }
     if (frameCount%250===0){

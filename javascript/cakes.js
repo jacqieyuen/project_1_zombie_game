@@ -1,10 +1,10 @@
-  var pillPic = new Image();
-  pillPic.src = "images/cake.png";
+  var cakePic = new Image();
+  cakePic.src = "images/cake.png";
 
-var pillsList={};
+var cakesList={};
 
-function Pills(id,x,y,spdY,width,height,color){
-  var pill = {
+function Cakes(id,x,y,spdY,width,height,color){
+  var cake = {
     x:x,
     y:y,
     spdY:spdY,
@@ -12,19 +12,19 @@ function Pills(id,x,y,spdY,width,height,color){
     width:width,
     height:height,
     color:"orange",
-    img: pillPic,
+    img: cakePic,
     sx:0,
     sy:0,
     sw:34,
     sh:34,
   };
-  pillsList[id] = pill;
+  cakesList[id] = cake;
 }
-randomlyGeneratePills = function(){
-  Pills(Math.random(),Math.random()*100+100,-((Math.random()*150)+600),spdY_medium,30,30,"orange");
-  Pills(Math.random(),Math.random()*100+340,-((Math.random()*150)+200),spdY_medium,30,30,"orange");
-  Pills(Math.random(),Math.random()*100+650,-((Math.random()*150)+50),spdY_medium,30,30,"orange");
+randomlyGenerateCakes = function(){
+  Cakes(Math.random(),Math.random()*100+100,-((Math.random()*150)+600),spdY_medium,30,30,"orange");
+  Cakes(Math.random(),Math.random()*100+340,-((Math.random()*150)+200),spdY_medium,30,30,"orange");
+  Cakes(Math.random(),Math.random()*100+650,-((Math.random()*150)+50),spdY_medium,30,30,"orange");
 };
-// generatePills = function(){
-//   Pills(Math.random(), (Math.random()*40)+25, -((Math.random()*150)+60),spdY_slow,50,50,"orange");
+// generateCakes = function(){
+//   Cakes(Math.random(), (Math.random()*40)+25, -((Math.random()*150)+60),spdY_slow,50,50,"orange");
 //   }
